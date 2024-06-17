@@ -1,0 +1,175 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+// Class representing a pet
+class Pet {
+    String name;
+    String breed;
+    int age;
+    String location;
+    boolean isLost;
+
+    public Pet(String name, String breed, int age) {
+        this.name = name;
+        this.breed = breed;
+        this.age = age;
+        this.location = "unknown";
+        this.isLost = false;
+    }
+
+    // Method to update pet's location
+    public void updateLocation(String newLocation) {
+        this.location = newLocation;
+    }
+
+    // Method to report pet as lost
+    public void reportLost() {
+        this.isLost = true;
+    }
+
+    // Method to report pet as found
+    public void reportFound() {
+        this.isLost = false;
+    }
+
+    // Method to check if pet is reported as lost
+    public boolean isPetLost() {
+        return isLost;
+
+    }
+
+    // Method to display pet information
+    public void displayInfo() {
+        System.out.println(name + " is a " + age + " year old " + breed + " and is currently located at " + location + ".");
+        if (isLost) {
+            System.out.println("This pet is reported as lost.");
+        } else {
+            System.out.println("This pet is not reported as lost.");
+        }
+    }
+
+    // Method to get pet's current location
+    public String getLocation() {
+        return location;
+
+    }
+}
+
+public class PetTracker {
+    // List to store all pets
+    private static List<Pet> petList = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    // Method to add a new pet to the list
+    public static void addPet() {
+        System.out.println("Enter pet's name:");
+        String name = scanner.nextLine();
+        System.out.println("Enter pet's breed:");
+        String breed = scanner.nextLine();
+        System.out.println("Enter pet's age:");
+        int age = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+        Pet newPet = new Pet(name, breed, age);
+        petList.add(newPet);
+        System.out.println("Pet added successfully!");
+    }
+
+    // Method to search for a pet by name
+    public static void searchPet() {
+        System.out.println("Enter pet's name to search:");
+        String name = scanner.nextLine();
+        for (Pet pet : petList) {
+            if (pet.name.equals(name)) {
+                pet.displayInfo();
+                System.out.println("Location: " + pet.getLocation());
+
+                return;
+            }
+        }
+        System.out.println("Pet not found.");
+    }
+
+    // Method to update pet's location
+    public static void updateLocation() {
+        System.out.println("Enter pet's name to update its location:");
+
+        String name = scanner.nextLine();
+        for (Pet pet : petList) {
+            if (pet.name.equals(name)) {
+                System.out.println("Enter pet's new location:");
+                String newLocation = scanner.nextLine();
+                pet.updateLocation(newLocation);
+                System.out.println("Location updated successfully!");
+
+                return;
+            }
+        }
+        System.out.println("Pet not found.");
+    }
+
+    // Method to report a pet as lost
+    public static void reportLost() {
+        System.out.println("Enter pet's name to report as lost:");
+
+        String name = scanner.nextLine();
+        for (Pet pet : petList) {
+            if (pet.name.equals(name)) {
+                pet.reportLost();
+                System.out.println("Pet reported as lost successfully!");
+
+                return;
+            }
+        }
+        System.out.println("Pet not found.");
+    }
+
+    // Method to report a pet as found
+    public static void reportFound() {
+        System.out.println("Enter pet's name to report as found:");
+
+        String name = scanner.nextLine();
+        for (Pet pet : petList) {
+            if (pet.name.equals(name)) {
+                pet.reportFound();
+                System.out.println("Pet reported as found successfully!");
+
+                return;
+            }
+        }
+        System.out.println("Pet not found.");
+    }
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("1. Add a pet\n2. Search for a pet\n3. Update pet's location\n4. Report pet as lost\n5. Report pet as found\n6. Exit");
+
+            System.out.println("Enter your choice:");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+            switch (choice) {
+                case 1:
+                    addPet();
+                    break;
+                case 2:
+                    searchPet();
+                    break;
+                case 3:
+                    updateLocation();
+                    break;
+                case 4:
+                    reportLost();
+                    break;
+                case 5:
+                    reportFound();
+                    break;
+                case 6:
+System.out.println("Exiting...");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        }
+    }
+}
